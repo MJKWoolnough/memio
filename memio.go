@@ -22,11 +22,12 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-// Memio implements Read, Write, Seek and Close methods for a byte slice.
+// MemIO implements Read, Write, Seek and Close methods for a byte slice.
 package memio
 
 import "io"
 
+// Closed is an error returned when trying to perform an operation after using Close().
 type Closed struct{}
 
 func (_ Closed) Error() string {
@@ -38,6 +39,7 @@ type readMem struct {
 	pos  int
 }
 
+// Use a byte slice for reading. Implements io.Reader, io.Seeker and io.Closer.
 func Open(data []byte) *readMem {
 	return &readMem{data, 0}
 }
@@ -81,6 +83,7 @@ type writeMem struct {
 	pos  int
 }
 
+// Use a byte slice for writing. Implements io.Writer, io.Seeker and io.Closer.
 func Create(data *[]byte) *writeMem {
 	return &writeMem{data, 0}
 }
