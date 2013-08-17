@@ -200,3 +200,17 @@ func TestWrite(t *testing.T) {
 		return
 	}
 }
+
+func TestNewWrite(t *testing.T) {
+	var data []byte
+	writer := Create(&data)
+	if n, err := writer.Write([]byte("Hello")); err != nil {
+		t.Errorf("got error: %q", err.Error())
+	} else if n != 5 {
+		t.Errorf("expecting to write 5 bytes, wrote %d", n)
+	} else if len(data) != 5 {
+		t.Errorf("expecting buf to have 5 bytes, has %d", n)
+	} else if string(data) != "Hello" {
+		t.Errorf("expecting %q, got %q", "Hello", string(data))
+	}
+}
