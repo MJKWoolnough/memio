@@ -93,9 +93,13 @@ func (b *writeMem) Write(p []byte) (int, error) {
 		return 0, &Closed{}
 	}
 	if end := b.pos + len(p); end > len(*b.data) {
-		t := make([]byte, end)
-		copy(t, *b.data)
-		*b.data = t
+		if end < cap(*b.data) {
+			*b.data = (*b.data)[:end]
+		} else {
+			t := make([]byte, end)
+			copy(t, *b.data)
+			*b.data = t
+		}
 	}
 	n := copy((*b.data)[b.pos:], p)
 	b.pos += n
