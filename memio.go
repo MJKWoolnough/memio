@@ -65,7 +65,7 @@ func (b *readMem) Seek(offset int64, whence int) (int64, error) {
 	case 1:
 		b.pos += int(offset)
 	case 2:
-		b.pos = len(b.data) - int(offset) //-1?
+		b.pos = len(b.data) - int(offset)
 	}
 	if b.pos < 0 {
 		b.pos = 0
@@ -96,9 +96,14 @@ func (b *writeMem) Write(p []byte) (int, error) {
 		if end < cap(*b.data) {
 			*b.data = (*b.data)[:end]
 		} else {
-			t := make([]byte, end)
-			copy(t, *b.data)
-			*b.data = t
+			var newData []byte
+			if len(*b.data) < 512 {
+				newData = make([]byte, end, end<<1)
+			} else {
+				newData = make([]byte, end, end+(end>>2))
+			}
+			copy(newData, *b.data)
+			*b.data = newData
 		}
 	}
 	n := copy((*b.data)[b.pos:], p)
@@ -116,7 +121,7 @@ func (b *writeMem) Seek(offset int64, whence int) (int64, error) {
 	case 1:
 		b.pos += int(offset)
 	case 2:
-		b.pos = len(*b.data) - int(offset) //-1?
+		b.pos = len(*b.data) - int(offset)
 	}
 	if b.pos < 0 {
 		b.pos = 0
