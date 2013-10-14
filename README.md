@@ -2,7 +2,7 @@
 --
     import "github.com/MJKWoolnough/memio"
 
-MemIO implements Read, Write, Seek and Close methods for a byte slice.
+MemIO implements Read, Write, Seek, Close and other io methods for a byte slice.
 
 ## Usage
 
@@ -11,14 +11,16 @@ MemIO implements Read, Write, Seek and Close methods for a byte slice.
 ```go
 func Create(data *[]byte) *writeMem
 ```
-Use a byte slice for writing. Implements io.Writer, io.Seeker and io.Closer.
+Use a byte slice for writing. Implements io.Writer, io.Seeker, io.Closer,
+io.WriterAt, io.ByteWriter and io.ReaderFrom.
 
 #### func  Open
 
 ```go
 func Open(data []byte) *readMem
 ```
-Use a byte slice for reading. Implements io.Reader, io.Seeker and io.Closer.
+Use a byte slice for reading. Implements io.Reader, io.Seeker, io.Closer,
+io.ReaderAt, io.ByteReader and io.WriterTo.
 
 #### type Closed
 
@@ -32,5 +34,5 @@ Close().
 #### func (Closed) Error
 
 ```go
-func (_ Closed) Error() string
+func (Closed) Error() string
 ```
