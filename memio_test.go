@@ -5,6 +5,22 @@ import (
 	"testing"
 )
 
+var (
+	_ io.Reader     = new(readMem)
+	_ io.Closer     = new(readMem)
+	_ io.Seeker     = new(readMem)
+	_ io.WriterTo   = new(readMem)
+	_ io.ByteReader = new(readMem)
+	_ io.ReaderAt   = new(readMem)
+
+	_ io.Writer     = new(writeMem)
+	_ io.Closer     = new(writeMem)
+	_ io.Seeker     = new(writeMem)
+	_ io.ReaderFrom = new(writeMem)
+	_ io.ByteWriter = new(writeMem)
+	_ io.WriterAt   = new(writeMem)
+)
+
 func TestRead(t *testing.T) {
 	data := []byte("Hello, World!")
 	reader := Open(data)
