@@ -27,6 +27,12 @@ package memio
 
 import "io"
 
+const (
+	SEEK_SET int = iota
+	SEEK_CURR
+	SEEK_END
+)
+
 // Closed is an error returned when trying to perform an operation after using Close().
 type Closed struct{}
 
@@ -71,11 +77,11 @@ func (b *readMem) Seek(offset int64, whence int) (int64, error) {
 		return 0, &Closed{}
 	}
 	switch whence {
-	case 0:
+	case SEEK_SET:
 		b.pos = int(offset)
-	case 1:
+	case SEEK_CURR:
 		b.pos += int(offset)
-	case 2:
+	case SEEK_END:
 		b.pos = len(b.data) - int(offset)
 	}
 	if b.pos < 0 {
@@ -178,11 +184,11 @@ func (b *writeMem) Seek(offset int64, whence int) (int64, error) {
 		return 0, &Closed{}
 	}
 	switch whence {
-	case 0:
+	case SEEK_SET:
 		b.pos = int(offset)
-	case 1:
+	case SEEK_CURR:
 		b.pos += int(offset)
-	case 2:
+	case SEEK_END:
 		b.pos = len(*b.data) - int(offset)
 	}
 	if b.pos < 0 {
