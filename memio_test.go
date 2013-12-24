@@ -230,3 +230,22 @@ func TestNewWrite(t *testing.T) {
 		t.Errorf("expecting %q, got %q", "Hello", string(data))
 	}
 }
+
+func TestReadFrom(t *testing.T) {
+	data := "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+	toRead := make([]byte, 0, 2480)
+	for i := 0; i < 40; i++ {
+		toRead = append(toRead, data...)
+	}
+	reader := Open(toRead)
+	var toWrite []byte
+	writer := Create(&toWrite)
+	if n, err := writer.ReadFrom(reader); err != nil {
+		t.Errorf("got error: %q", err.Error())
+	} else if n != 2480 {
+		t.Errorf("expecting to write 2480 bytes, wrote %d", n)
+	} else if string(toRead) != string(toWrite) {
+		t.Errorf("expecting %q, got %q", string(toRead), string(toWrite))
+	}
+
+}

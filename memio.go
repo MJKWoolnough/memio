@@ -111,6 +111,7 @@ func (b *readMem) WriteTo(f io.Writer) (int64, error) {
 		return 0, io.EOF
 	}
 	n, err := f.Write(b.data[b.pos:])
+	b.pos = len(b.data)
 	return int64(n), err
 }
 
@@ -168,6 +169,7 @@ func (b *writeMem) ReadFrom(f io.Reader) (int64, error) {
 			c += int64(n)
 			b.setSize(b.pos + n)
 			copy((*b.data)[b.pos:], buf[:n])
+			b.pos += n
 		}
 		if err != nil {
 			if err == io.EOF {
