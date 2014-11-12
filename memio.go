@@ -1,12 +1,12 @@
-// MemIO implements Read, Write, Seek, Close and other io methods for a byte slice.
+// Package memio implements Read, Write, Seek, Close and other io methods for a byte slice.
 package memio
 
 import "io"
 
 const (
-	SEEK_SET int = iota
-	SEEK_CURR
-	SEEK_END
+	seekSet = iota
+	seekCurr
+	seekEnd
 )
 
 // Closed is an error returned when trying to perform an operation after using Close().
@@ -21,8 +21,9 @@ type readMem struct {
 	pos  int
 }
 
-// Use a byte slice for reading. Implements io.Reader, io.Seeker, io.Closer, io.ReaderAt, io.ByteReader and io.WriterTo.
-func Open(data []byte) *readMem {
+// Open uses a byte slice for reading. Implements io.Reader, io.Seeker,
+// io.Closer, io.ReaderAt, io.ByteReader and io.WriterTo.
+func Open(data []byte) io.Reader {
 	return &readMem{data, 0}
 }
 
@@ -53,11 +54,11 @@ func (b *readMem) Seek(offset int64, whence int) (int64, error) {
 		return 0, &Closed{}
 	}
 	switch whence {
-	case SEEK_SET:
+	case seekSet:
 		b.pos = int(offset)
-	case SEEK_CURR:
+	case seekCurr:
 		b.pos += int(offset)
-	case SEEK_END:
+	case seekEnd:
 		b.pos = len(b.data) - int(offset)
 	}
 	if b.pos < 0 {
@@ -96,8 +97,9 @@ type writeMem struct {
 	pos  int
 }
 
-// Use a byte slice for writing. Implements io.Writer, io.Seeker, io.Closer, io.WriterAt, io.ByteWriter and io.ReaderFrom.
-func Create(data *[]byte) *writeMem {
+// Create uses a byte slice for writing. Implements io.Writer, io.Seeker,
+// io.Closer, io.WriterAt, io.ByteWriter and io.ReaderFrom.
+func Create(data *[]byte) io.Writer {
 	return &writeMem{data, 0}
 }
 
@@ -162,11 +164,11 @@ func (b *writeMem) Seek(offset int64, whence int) (int64, error) {
 		return 0, &Closed{}
 	}
 	switch whence {
-	case SEEK_SET:
+	case seekSet:
 		b.pos = int(offset)
-	case SEEK_CURR:
+	case seekCur:
 		b.pos += int(offset)
-	case SEEK_END:
+	case seekEnd:
 		b.pos = len(*b.data) - int(offset)
 	}
 	if b.pos < 0 {
