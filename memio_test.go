@@ -6,19 +6,19 @@ import (
 )
 
 var (
-	_ io.Reader     = new(readMem)
-	_ io.Closer     = new(readMem)
-	_ io.Seeker     = new(readMem)
-	_ io.WriterTo   = new(readMem)
-	_ io.ByteReader = new(readMem)
-	_ io.ReaderAt   = new(readMem)
+	_ io.Reader     = new(ReadMem)
+	_ io.Closer     = new(ReadMem)
+	_ io.Seeker     = new(ReadMem)
+	_ io.WriterTo   = new(ReadMem)
+	_ io.ByteReader = new(ReadMem)
+	_ io.ReaderAt   = new(ReadMem)
 
-	_ io.Writer     = new(writeMem)
-	_ io.Closer     = new(writeMem)
-	_ io.Seeker     = new(writeMem)
-	_ io.ReaderFrom = new(writeMem)
-	_ io.ByteWriter = new(writeMem)
-	_ io.WriterAt   = new(writeMem)
+	_ io.Writer     = new(WriteMem)
+	_ io.Closer     = new(WriteMem)
+	_ io.Seeker     = new(WriteMem)
+	_ io.ReaderFrom = new(WriteMem)
+	_ io.ByteWriter = new(WriteMem)
+	_ io.WriterAt   = new(WriteMem)
 )
 
 func TestRead(t *testing.T) {
