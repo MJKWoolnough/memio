@@ -1,7 +1,10 @@
 // Package memio implements Read, Write, Seek, Close and other io methods for a byte slice.
 package memio
 
-import "io"
+import (
+	"bytes"
+	"io"
+)
 
 const (
 	seekSet = iota
@@ -18,86 +21,17 @@ func (Closed) Error() string {
 
 // ReadMem holds a byte slice that can be used for many io interfaces
 type ReadMem struct {
-	data []byte
-	pos  int
+	*bytes.Reader
 }
 
 // Open uses a byte slice for reading. Implements io.Reader, io.Seeker,
 // io.Closer, io.ReaderAt, io.ByteReader and io.WriterTo.
-
 func Open(data []byte) *ReadMem {
-	return &ReadMem{data, 0}
+	return &ReadMem{bytes.NewReader(data)}
 }
 
-// Read is an implementation of the io.Reader interface
-func (b *ReadMem) Read(p []byte) (int, error) {
-	if b.data == nil {
-		return 0, &Closed{}
-	} else if b.pos >= len(b.data) {
-		return 0, io.EOF
-	}
-	n := copy(p, b.data[b.pos:])
-	b.pos += n
-	return n, nil
-}
-
-// ReadByte is an implementation of the io.ByteReader interface
-func (b *ReadMem) ReadByte() (byte, error) {
-	if b.data == nil {
-		return 0, &Closed{}
-	} else if b.pos >= len(b.data) {
-		return 0, io.EOF
-	}
-	c := b.data[b.pos]
-	b.pos++
-	return c, nil
-}
-
-// Seek is an implementation of the io.Seeker interface
-func (b *ReadMem) Seek(offset int64, whence int) (int64, error) {
-	if b.data == nil {
-		return 0, &Closed{}
-	}
-	switch whence {
-	case seekSet:
-		b.pos = int(offset)
-	case seekCurr:
-		b.pos += int(offset)
-	case seekEnd:
-		b.pos = len(b.data) + int(offset)
-	}
-	if b.pos < 0 {
-		b.pos = 0
-	}
-	return int64(b.pos), nil
-}
-
-// Close is an implementation of the io.Closer interface
-func (b *ReadMem) Close() error {
-	b.data = nil
+func (ReadMem) Close() error {
 	return nil
-}
-
-// ReadAt is an implementation of the io.ReaderAt interface
-func (b *ReadMem) ReadAt(p []byte, off int64) (int, error) {
-	if b.data == nil {
-		return 0, &Closed{}
-	} else if off >= int64(len(b.data)) {
-		return 0, io.EOF
-	}
-	return copy(p, b.data[off:]), nil
-}
-
-// WriteTo is an implementation of the io.WriterTo interface
-func (b *ReadMem) WriteTo(f io.Writer) (int64, error) {
-	if b.data == nil {
-		return 0, &Closed{}
-	} else if b.pos >= len(b.data) {
-		return 0, io.EOF
-	}
-	n, err := f.Write(b.data[b.pos:])
-	b.pos = len(b.data)
-	return int64(n), err
 }
 
 // WriteMem holds a pointer to a byte slice and allows numerous io interfaces

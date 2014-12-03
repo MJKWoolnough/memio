@@ -114,16 +114,6 @@ func TestRead(t *testing.T) {
 		return
 	}
 	reader.Close()
-	_, err := reader.Seek(1, 0)
-	if _, ok := err.(*Closed); !ok {
-		t.Errorf("expecting close error")
-		return
-	}
-	_, err = reader.Read(toRead)
-	if _, ok := err.(*Closed); !ok {
-		t.Errorf("expecting close error")
-		return
-	}
 }
 
 func TestWrite(t *testing.T) {
