@@ -93,7 +93,7 @@ func TestRead(t *testing.T) {
 		t.Errorf("expecting %q, got %q", "rld! ", string(toRead))
 		return
 	}
-	if pos, err := reader.Seek(6, 2); pos != 7 {
+	if pos, err := reader.Seek(-6, 2); pos != 7 {
 		t.Errorf("expected to be at postion 7, got %d", pos)
 		return
 	} else if err != nil {
