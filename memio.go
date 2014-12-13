@@ -50,7 +50,7 @@ func Create(data *[]byte) *WriteMem {
 // Write is an implementation of the io.Writer interface
 func (b *WriteMem) Write(p []byte) (int, error) {
 	if b.data == nil {
-		return 0, &Closed{}
+		return 0, Closed{}
 	}
 	b.setSize(b.pos + len(p))
 	n := copy((*b.data)[b.pos:], p)
@@ -61,7 +61,7 @@ func (b *WriteMem) Write(p []byte) (int, error) {
 // WriteAt is an implementation of the io.WriterAt interface
 func (b *WriteMem) WriteAt(p []byte, off int64) (int, error) {
 	if b.data == nil {
-		return 0, &Closed{}
+		return 0, Closed{}
 	}
 	b.setSize(int(off) + len(p))
 	return copy((*b.data)[off:], p), nil
@@ -70,7 +70,7 @@ func (b *WriteMem) WriteAt(p []byte, off int64) (int, error) {
 // WriteByte is an implementation of the io.WriteByte interface
 func (b *WriteMem) WriteByte(c byte) error {
 	if b.data == nil {
-		return &Closed{}
+		return Closed{}
 	}
 	b.setSize(b.pos + 1)
 	(*b.data)[b.pos] = c
@@ -78,10 +78,10 @@ func (b *WriteMem) WriteByte(c byte) error {
 	return nil
 }
 
-// ReadFrom is an implamentation of the io.ReaderFrom interface
+// ReadFrom is an implementation of the io.ReaderFrom interface
 func (b *WriteMem) ReadFrom(f io.Reader) (int64, error) {
 	if b.data == nil {
-		return 0, &Closed{}
+		return 0, Closed{}
 	}
 	var (
 		c   int64
@@ -110,7 +110,7 @@ func (b *WriteMem) ReadFrom(f io.Reader) (int64, error) {
 // Seek is an implementation of the io.Seeker interface
 func (b *WriteMem) Seek(offset int64, whence int) (int64, error) {
 	if b.data == nil {
-		return 0, &Closed{}
+		return 0, Closed{}
 	}
 	switch whence {
 	case seekSet:
