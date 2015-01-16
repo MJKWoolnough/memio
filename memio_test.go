@@ -196,12 +196,12 @@ func TestWrite(t *testing.T) {
 	}
 	writer.Close()
 	_, err := writer.Seek(0, 0)
-	if _, ok := err.(*Closed); !ok {
+	if _, ok := err.(Closed); !ok {
 		t.Errorf("expecting close error")
 		return
 	}
 	_, err = writer.Write([]byte("Beep"))
-	if _, ok := err.(*Closed); !ok {
+	if _, ok := err.(Closed); !ok {
 		t.Errorf("expecting close error")
 		return
 	}
