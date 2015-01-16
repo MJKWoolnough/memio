@@ -26,8 +26,8 @@ type ReadMem struct {
 
 // Open uses a byte slice for reading. Implements io.Reader, io.Seeker,
 // io.Closer, io.ReaderAt, io.ByteReader and io.WriterTo.
-func Open(data []byte) *ReadMem {
-	return &ReadMem{bytes.NewReader(data)}
+func Open(data []byte) ReadMem {
+	return ReadMem{bytes.NewReader(data)}
 }
 
 func (ReadMem) Close() error {
