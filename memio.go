@@ -117,7 +117,7 @@ func (b *WriteMem) Seek(offset int64, whence int) (int64, error) {
 	case seekCurr:
 		b.pos += int(offset)
 	case seekEnd:
-		b.pos = len(*b.data) - int(offset)
+		b.pos = len(*b.data) + int(offset)
 	}
 	if b.pos < 0 {
 		b.pos = 0

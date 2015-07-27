@@ -164,7 +164,7 @@ func TestWrite(t *testing.T) {
 		t.Errorf("expecting %q, got %q", "Edmund", string(data))
 		return
 	}
-	if pos, err := writer.Seek(4, 2); pos != 2 {
+	if pos, err := writer.Seek(-4, 2); pos != 2 {
 		t.Errorf("expected to be at postion 0, got %d", pos)
 	} else if err != nil {
 		t.Errorf("got error: %q", err.Error())
