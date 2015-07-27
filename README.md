@@ -6,25 +6,17 @@ Package memio implements Read, Write, Seek, Close and other io methods for a byt
 
 ## Usage
 
-#### type Closed
-
 ```go
-type Closed struct{}
+var ErrClosed = errors.New("operation not permitted when closed")
 ```
-
-Closed is an error returned when trying to perform an operation after using
+ErrClosed is an error returned when trying to perform an operation after using
 Close().
-
-#### func (Closed) Error
-
-```go
-func (Closed) Error() string
-```
 
 #### type ReadMem
 
 ```go
 type ReadMem struct {
+	*bytes.Reader
 }
 ```
 
@@ -33,50 +25,62 @@ ReadMem holds a byte slice that can be used for many io interfaces
 #### func  Open
 
 ```go
-func Open(data []byte) *ReadMem
+func Open(data []byte) ReadMem
 ```
 Open uses a byte slice for reading. Implements io.Reader, io.Seeker, io.Closer,
 io.ReaderAt, io.ByteReader and io.WriterTo.
 
-#### func (*ReadMem) Close
+#### func (ReadMem) Close
 
 ```go
-func (b *ReadMem) Close() error
+func (ReadMem) Close() error
 ```
-Close is an implementation of the io.Closer interface
+Close is a no-op func the lets ReadMem implement interfaces that require a Close
+method
 
-#### func (*ReadMem) Read
+#### type ReadWriteMem
 
 ```go
-func (b *ReadMem) Read(p []byte) (int, error)
+type ReadWriteMem struct {
+	WriteMem
+}
+```
+
+
+#### func  OpenMem
+
+```go
+func OpenMem(data *[]byte) *ReadWriteMem
+```
+OpenMem uses a byte slice for reading and writing. Implements io.Reader,
+io.Writer, io.Seeker, io.ReaderAt, io.ByteReader, io.WriterTo, io.WriterAt,
+io.ByteWriter and io.ReaderFrom.
+
+#### func (*ReadWriteMem) Read
+
+```go
+func (b *ReadWriteMem) Read(p []byte) (int, error)
 ```
 Read is an implementation of the io.Reader interface
 
-#### func (*ReadMem) ReadAt
+#### func (*ReadWriteMem) ReadAt
 
 ```go
-func (b *ReadMem) ReadAt(p []byte, off int64) (int, error)
+func (b *ReadWriteMem) ReadAt(p []byte, off int64) (int, error)
 ```
 ReadAt is an implementation of the io.ReaderAt interface
 
-#### func (*ReadMem) ReadByte
+#### func (*ReadWriteMem) ReadByte
 
 ```go
-func (b *ReadMem) ReadByte() (byte, error)
+func (b *ReadWriteMem) ReadByte() (byte, error)
 ```
 ReadByte is an implementation of the io.ByteReader interface
 
-#### func (*ReadMem) Seek
+#### func (*ReadWriteMem) WriteTo
 
 ```go
-func (b *ReadMem) Seek(offset int64, whence int) (int64, error)
-```
-Seek is an implementation of the io.Seeker interface
-
-#### func (*ReadMem) WriteTo
-
-```go
-func (b *ReadMem) WriteTo(f io.Writer) (int64, error)
+func (b *ReadWriteMem) WriteTo(f io.Writer) (int64, error)
 ```
 WriteTo is an implementation of the io.WriterTo interface
 
@@ -110,7 +114,7 @@ Close is and implementation of the io.Closer interface
 ```go
 func (b *WriteMem) ReadFrom(f io.Reader) (int64, error)
 ```
-ReadFrom is an implamentation of the io.ReaderFrom interface
+ReadFrom is an implementation of the io.ReaderFrom interface
 
 #### func (*WriteMem) Seek
 
