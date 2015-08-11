@@ -46,6 +46,8 @@ type ReadWriteMem struct {
 }
 ```
 
+ReadWriteMem is a combination of both the ReadMem and WriteMem types, allowing
+both all reads and writes to the same underlying byte slice.
 
 #### func  OpenMem
 
