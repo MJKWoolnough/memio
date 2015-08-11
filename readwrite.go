@@ -2,6 +2,8 @@ package memio
 
 import "io"
 
+// ReadWriteMem is a combination of both the ReadMem and WriteMem types,
+// allowing both all reads and writes to the same underlying byte slice.
 type ReadWriteMem struct {
 	WriteMem
 }
