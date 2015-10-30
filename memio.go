@@ -147,3 +147,14 @@ func (b *WriteMem) setSize(end int) {
 		}
 	}
 }
+
+// Truncate changes the length of the byte slice to the given amount
+func (b *WriteMem) Truncate(s int64) error {
+	if l := int64(len(*b.data)); l > s {
+		copy((*b.data)[s:], make([]byte, l-s))
+		*b.data = (*b.data)[:s]
+	} else if l < s {
+		b.setSize(int(s))
+	}
+	return nil
+}

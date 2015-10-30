@@ -248,3 +248,44 @@ func TestReadFrom(t *testing.T) {
 	}
 
 }
+
+func TestTruncate(t *testing.T) {
+	data := make([]byte, 100)
+	for i := byte(0); i < 100; i++ {
+		data[i] = i % 10
+	}
+	w := Create(&data)
+	w.Truncate(75)
+	if len(data) != 75 {
+		t.Errorf("expecting length 75, got %d", len(data))
+		return
+	}
+	w.Truncate(90)
+	if len(data) != 90 {
+		t.Errorf("expecting length 90, got %d", len(data))
+		return
+	}
+	for i := byte(0); i < 75; i++ {
+		if data[i] != i%10 {
+			t.Errorf("at position %d, expecting value of %d, got %d", i, i%10, data[i])
+			return
+		}
+	}
+	for i := byte(75); i < 90; i++ {
+		if data[i] != 0 {
+			t.Errorf("at position %d, expecting value of 0, got %d", i, data[i])
+			return
+		}
+	}
+	w.Truncate(100)
+	if len(data) != 100 {
+		t.Errorf("expecting length 100, got %d", len(data))
+		return
+	}
+	for i := byte(90); i < 100; i++ {
+		if data[i] != 0 {
+			t.Errorf("at position %d, expecting value of 0, got %d", i, data[i])
+			return
+		}
+	}
+}
