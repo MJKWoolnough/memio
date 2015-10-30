@@ -152,3 +152,9 @@ WriteAt is an implementation of the io.WriterAt interface
 func (b *WriteMem) WriteByte(c byte) error
 ```
 WriteByte is an implementation of the io.WriteByte interface
+
+#### func (*WriteMem) WriteString
+
+```go
+func (b *WriteMem) WriteString(s string) (int, error)
+```

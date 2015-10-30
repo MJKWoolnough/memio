@@ -158,3 +158,7 @@ func (b *WriteMem) Truncate(s int64) error {
 	}
 	return nil
 }
+
+func (b *WriteMem) WriteString(s string) (int, error) {
+	return b.Write([]byte(s))
+}
