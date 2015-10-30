@@ -125,6 +125,13 @@ func (b *WriteMem) Seek(offset int64, whence int) (int64, error)
 ```
 Seek is an implementation of the io.Seeker interface
 
+#### func (*WriteMem) Truncate
+
+```go
+func (b *WriteMem) Truncate(s int64) error
+```
+Truncate changes the length of the byte slice to the given amount
+
 #### func (*WriteMem) Write
 
 ```go
