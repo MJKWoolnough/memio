@@ -2,7 +2,8 @@
 --
     import "github.com/MJKWoolnough/memio"
 
-Package memio implements Read, Write, Seek, Close and other io methods for a byte slice.
+Package memio implements Read, Write, Seek, Close and other io methods for a
+byte slice.
 
 ## Usage
 
