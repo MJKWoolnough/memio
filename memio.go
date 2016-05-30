@@ -159,6 +159,7 @@ func (b *WriteMem) Truncate(s int64) error {
 	return nil
 }
 
+// WriteString writes a string to the underlying memory
 func (b *WriteMem) WriteString(s string) (int, error) {
 	return b.Write([]byte(s))
 }
