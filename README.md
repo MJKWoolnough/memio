@@ -159,3 +159,4 @@ WriteByte is an implementation of the io.WriteByte interface
 ```go
 func (b *WriteMem) WriteString(s string) (int, error)
 ```
+WriteString writes a string to the underlying memory
