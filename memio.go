@@ -33,6 +33,14 @@ func (ReadMem) Close() error {
 	return nil
 }
 
+// Peek reads the next n bytes without advancing the position
+func (r ReadMem) Peek(n int) ([]byte, error) {
+	pos, _ := r.Seek(0, seekCurr)
+	buf := make([]byte, n)
+	_, err := r.ReadAt(buf, pos)
+	return buf, err
+}
+
 // WriteMem holds a pointer to a byte slice and allows numerous io interfaces
 // to be used with it.
 type WriteMem struct {

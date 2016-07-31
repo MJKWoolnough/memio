@@ -15,6 +15,18 @@ func OpenMem(data *[]byte) *ReadWriteMem {
 	return &ReadWriteMem{WriteMem{data, 0}}
 }
 
+// Peek reads the next n bytes without advancing the position
+func (b *ReadWriteMem) Peek(n int) ([]byte, error) {
+	if b.data == nil {
+		return nil, ErrClosed
+	} else if b.pos >= len(*b.data) {
+		return nil, io.EOF
+	} else if b.pos+n > len(*b.data) {
+		return (*b.data)[b.pos:], io.EOF
+	}
+	return (*b.data)[b.pos : b.pos+n], nil
+}
+
 // Read is an implementation of the io.Reader interface
 func (b *ReadWriteMem) Read(p []byte) (int, error) {
 	if b.data == nil {
