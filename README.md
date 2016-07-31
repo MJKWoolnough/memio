@@ -39,6 +39,13 @@ func (ReadMem) Close() error
 Close is a no-op func the lets ReadMem implement interfaces that require a Close
 method
 
+#### func (ReadMem) Peek
+
+```go
+func (r ReadMem) Peek(n int) ([]byte, error)
+```
+Peek reads the next n bytes without advancing the position
+
 #### type ReadWriteMem
 
 ```go
@@ -58,6 +65,13 @@ func OpenMem(data *[]byte) *ReadWriteMem
 OpenMem uses a byte slice for reading and writing. Implements io.Reader,
 io.Writer, io.Seeker, io.ReaderAt, io.ByteReader, io.WriterTo, io.WriterAt,
 io.ByteWriter and io.ReaderFrom.
+
+#### func (*ReadWriteMem) Peek
+
+```go
+func (b *ReadWriteMem) Peek(n int) ([]byte, error)
+```
+Peek reads the next n bytes without advancing the position
 
 #### func (*ReadWriteMem) Read
 
