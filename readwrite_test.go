@@ -62,7 +62,7 @@ func TestReadWriteRead(t *testing.T) {
 		t.Errorf("expecting EOF")
 	}
 	if pos, err := reader.Seek(2, 0); pos != 2 {
-		t.Errorf("expected to be at postion 2, got %d", pos)
+		t.Errorf("expected to be at position 2, got %d", pos)
 		return
 	} else if err != nil {
 		t.Errorf("got error: %q", err.Error())
@@ -78,7 +78,7 @@ func TestReadWriteRead(t *testing.T) {
 		return
 	}
 	if pos, err := reader.Seek(2, 1); pos != 9 {
-		t.Errorf("expected to be at postion 9, got %d", pos)
+		t.Errorf("expected to be at position 9, got %d", pos)
 		return
 	} else if err != nil {
 		t.Errorf("got error: %q", err.Error())
@@ -94,7 +94,7 @@ func TestReadWriteRead(t *testing.T) {
 		return
 	}
 	if pos, err := reader.Seek(-6, 2); pos != 7 {
-		t.Errorf("expected to be at postion 7, got %d", pos)
+		t.Errorf("expected to be at position 7, got %d", pos)
 		return
 	} else if err != nil {
 		t.Errorf("got error: %q", err.Error())
@@ -150,7 +150,7 @@ func TestReadWriteWrite(t *testing.T) {
 		return
 	}
 	if pos, err := writer.Seek(0, 0); pos != 0 {
-		t.Errorf("expected to be at postion 0, got %d", pos)
+		t.Errorf("expected to be at position 0, got %d", pos)
 	} else if err != nil {
 		t.Errorf("got error: %q", err.Error())
 		return
@@ -165,7 +165,7 @@ func TestReadWriteWrite(t *testing.T) {
 		return
 	}
 	if pos, err := writer.Seek(-4, 2); pos != 2 {
-		t.Errorf("expected to be at postion 0, got %d", pos)
+		t.Errorf("expected to be at position 0, got %d", pos)
 	} else if err != nil {
 		t.Errorf("got error: %q", err.Error())
 		return
@@ -180,7 +180,7 @@ func TestReadWriteWrite(t *testing.T) {
 		return
 	}
 	if pos, err := writer.Seek(1, 1); pos != 6 {
-		t.Errorf("expected to be at postion 6, got %d", pos)
+		t.Errorf("expected to be at position 6, got %d", pos)
 	} else if err != nil {
 		t.Errorf("got error: %q", err.Error())
 		return
