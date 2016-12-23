@@ -2,43 +2,32 @@ package memio
 
 import "io"
 
-// Simple grants a byte slice very straightforward read/write methods.
+// Buffer grants a byte slice very straightforward IO methods.
 // Write methods do not expand the length/capacity of the slice
-type Simple []byte
+type Buffer []byte
 
 // Read satisfies the io.Reader interface
-func (s *Simple) Read(p []byte) (int, error) {
+func (s *Buffer) Read(p []byte) (int, error) {
+	if len(p) == 0 {
+		return 0, nil
+	}
+	if len(*s) == 0 {
+		return 0, io.EOF
+	}
 	n := copy(p, *s)
 	*s = (*s)[n:]
-	if n < len(p) {
-		return n, io.EOF
-	}
 	return n, nil
 }
 
 // WriteTo satisfies the io.WriterTo interface
-func (s *Simple) WriteTo(w io.Writer) (int64, error) {
+func (s *Buffer) WriteTo(w io.Writer) (int64, error) {
 	n, err := w.Write([]byte(*s))
 	*s = (*s)[n:]
 	return int64(n), err
 }
 
 // Write satisfies the io.Writer interface
-func (s *Simple) Write(p []byte) (int, error) {
-	n := copy(*s, p)
-	*s = (*s)[n:]
-	if n < len(p) {
-		return n, io.EOF
-	}
-	return n, nil
-}
-
-// ReadFrom satifies the io.ReaderFrom interface
-func (s *Simple) ReadFrom(r io.Reader) (int64, error) {
-	n, err := io.ReadFull(r, *s)
-	*s = (*s)[n:]
-	if err == io.EOF {
-		err = nil
-	}
-	return int64(n), err
+func (s *Buffer) Write(p []byte) (int, error) {
+	*s = append(*s, p...)
+	return len(p), nil
 }
