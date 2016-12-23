@@ -2,7 +2,7 @@ package memio
 
 import "io"
 
-// Simple grants a byte slice very straightfoward read/write methods.
+// Simple grants a byte slice very straightforward read/write methods.
 // Write methods do not expand the length/capacity of the slice
 type Simple []byte
 
