@@ -31,3 +31,25 @@ func (s *Buffer) Write(p []byte) (int, error) {
 	*s = append(*s, p...)
 	return len(p), nil
 }
+
+// ReadByte satisfies the io.ByteReader interface
+func (s *Buffer) ReadByte() (byte, error) {
+	if len(*s) == 0 {
+		return 0, io.EOF
+	}
+	b := (*s)[0]
+	*s = (*s)[1:]
+	return b, nil
+}
+
+// WriteByte satisfies the io.ByteWriter interface
+func (s *Buffer) WriteByte(b byte) error {
+	*s = append(*s, b)
+	return nil
+}
+
+// Close satisfies the io.Closer interface
+func (s *Buffer) Close() error {
+	*s = nil
+	return nil
+}
