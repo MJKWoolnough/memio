@@ -231,7 +231,7 @@ func TestNewWrite(t *testing.T) {
 }
 
 func TestReadFrom(t *testing.T) {
-	data := "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+	const data = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 	toRead := make([]byte, 0, 2480)
 	for i := 0; i < 40; i++ {
 		toRead = append(toRead, data...)
@@ -246,7 +246,6 @@ func TestReadFrom(t *testing.T) {
 	} else if string(toRead) != string(toWrite) {
 		t.Errorf("expecting %q, got %q", string(toRead), string(toWrite))
 	}
-
 }
 
 func TestTruncate(t *testing.T) {
