@@ -3,7 +3,6 @@ package memio
 import "io"
 
 // Buffer grants a byte slice very straightforward IO methods.
-// Write methods do not expand the length/capacity of the slice
 type Buffer []byte
 
 // Read satisfies the io.Reader interface
