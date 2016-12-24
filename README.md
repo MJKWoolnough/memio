@@ -13,6 +13,56 @@ var ErrClosed = errors.New("operation not permitted when closed")
 ErrClosed is an error returned when trying to perform an operation after using
 Close().
 
+#### type Buffer
+
+```go
+type Buffer []byte
+```
+
+Buffer grants a byte slice very straightforward IO methods.
+
+#### func (*Buffer) Close
+
+```go
+func (s *Buffer) Close() error
+```
+Close satisfies the io.Closer interface
+
+#### func (*Buffer) Read
+
+```go
+func (s *Buffer) Read(p []byte) (int, error)
+```
+Read satisfies the io.Reader interface
+
+#### func (*Buffer) ReadByte
+
+```go
+func (s *Buffer) ReadByte() (byte, error)
+```
+ReadByte satisfies the io.ByteReader interface
+
+#### func (*Buffer) Write
+
+```go
+func (s *Buffer) Write(p []byte) (int, error)
+```
+Write satisfies the io.Writer interface
+
+#### func (*Buffer) WriteByte
+
+```go
+func (s *Buffer) WriteByte(b byte) error
+```
+WriteByte satisfies the io.ByteWriter interface
+
+#### func (*Buffer) WriteTo
+
+```go
+func (s *Buffer) WriteTo(w io.Writer) (int64, error)
+```
+WriteTo satisfies the io.WriterTo interface
+
 #### type ReadMem
 
 ```go
