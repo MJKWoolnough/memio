@@ -31,6 +31,12 @@ func (s *Buffer) Write(p []byte) (int, error) {
 	return len(p), nil
 }
 
+// WriteString writes a string to the buffer without casting to a byte slice
+func (s *Buffer) WriteString(str string) (int, error) {
+	*s = append(*s, str...)
+	return len(str), nil
+}
+
 // ReadByte satisfies the io.ByteReader interface
 func (s *Buffer) ReadByte() (byte, error) {
 	if len(*s) == 0 {
@@ -45,6 +51,16 @@ func (s *Buffer) ReadByte() (byte, error) {
 func (s *Buffer) WriteByte(b byte) error {
 	*s = append(*s, b)
 	return nil
+}
+
+// Peek reads the next n bytes without advancing the position
+func (s *Buffer) Peek(n int) ([]byte, error) {
+	if *s == nil {
+		return nil, ErrClosed
+	} else if n > len(*s) {
+		return *s, io.EOF
+	}
+	return (*s)[:n], nil
 }
 
 // Close satisfies the io.Closer interface
