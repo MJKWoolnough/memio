@@ -28,6 +28,13 @@ func (s *Buffer) Close() error
 ```
 Close satisfies the io.Closer interface
 
+#### func (*Buffer) Peek
+
+```go
+func (s *Buffer) Peek(n int) ([]byte, error)
+```
+Peek reads the next n bytes without advancing the position
+
 #### func (*Buffer) Read
 
 ```go
@@ -55,6 +62,13 @@ Write satisfies the io.Writer interface
 func (s *Buffer) WriteByte(b byte) error
 ```
 WriteByte satisfies the io.ByteWriter interface
+
+#### func (*Buffer) WriteString
+
+```go
+func (s *Buffer) WriteString(str string) (int, error)
+```
+WriteString writes a string to the buffer without casting to a byte slice
 
 #### func (*Buffer) WriteTo
 
