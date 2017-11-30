@@ -20,7 +20,7 @@ func (s *Buffer) Read(p []byte) (int, error) {
 
 // WriteTo satisfies the io.WriterTo interface
 func (s *Buffer) WriteTo(w io.Writer) (int64, error) {
-	n, err := w.Write([]byte(*s))
+	n, err := w.Write(*s)
 	*s = (*s)[n:]
 	return int64(n), err
 }
