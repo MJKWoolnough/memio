@@ -188,7 +188,7 @@ io.Closer, io.WriterAt, io.ByteWriter and io.ReaderFrom.
 ```go
 func (b *WriteMem) Close() error
 ```
-Close is and implementation of the io.Closer interface
+Close is an implementation of the io.Closer interface
 
 #### func (*WriteMem) ReadFrom
 
