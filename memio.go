@@ -133,7 +133,7 @@ func (b *WriteMem) Seek(offset int64, whence int) (int64, error) {
 	return int64(b.pos), nil
 }
 
-// Close is and implementation of the io.Closer interface
+// Close is an implementation of the io.Closer interface
 func (b *WriteMem) Close() error {
 	b.data = nil
 	return nil
