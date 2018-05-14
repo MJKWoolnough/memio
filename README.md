@@ -165,6 +165,49 @@ func (b *ReadWriteMem) WriteTo(f io.Writer) (int64, error)
 ```
 WriteTo is an implementation of the io.WriterTo interface
 
+#### type String
+
+```go
+type String string
+```
+
+String grants a string Read-Only methods.
+
+#### func (*String) Close
+
+```go
+func (s *String) Close() error
+```
+Close satisfies the io.Closer interface
+
+#### func (*String) Peek
+
+```go
+func (s *String) Peek(n int) ([]byte, error)
+```
+Peek reads the next n bytes without advancing the position
+
+#### func (*String) Read
+
+```go
+func (s *String) Read(p []byte) (int, error)
+```
+Read satisfies the io.Reader interface
+
+#### func (*String) ReadByte
+
+```go
+func (s *String) ReadByte() (byte, error)
+```
+ReadByte satisfies the io.ByteReader interface
+
+#### func (*String) WriteTo
+
+```go
+func (s *String) WriteTo(w io.Writer) (int64, error)
+```
+WriteTo satisfies the io.WriterTo interface
+
 #### type WriteMem
 
 ```go
