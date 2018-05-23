@@ -1,6 +1,9 @@
 package memio
 
-import "io"
+import (
+	"errors"
+	"io"
+)
 
 // ReadWriteMem is a combination of both the ReadMem and WriteMem types,
 // allowing both all reads and writes to the same underlying byte slice.
@@ -51,6 +54,18 @@ func (b *ReadWriteMem) ReadByte() (byte, error) {
 	return c, nil
 }
 
+// UnreadByte implements the io.ByteScanner interface
+func (b *ReadWriteMem) UnreadByte() error {
+	if b.data == nil {
+		return ErrClosed
+	}
+	if b.pos > 0 {
+		b.pos--
+		return nil
+	}
+	return ErrInvalidUnreadByte
+}
+
 // ReadAt is an implementation of the io.ReaderAt interface
 func (b *ReadWriteMem) ReadAt(p []byte, off int64) (int, error) {
 	if b.data == nil {
@@ -72,3 +87,7 @@ func (b *ReadWriteMem) WriteTo(f io.Writer) (int64, error) {
 	b.pos = len(*b.data)
 	return int64(n), err
 }
+
+var (
+	ErrInvalidUnreadByte = errors.New("invalid UnreadByte, no bytes read")
+)

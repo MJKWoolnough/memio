@@ -13,6 +13,12 @@ var ErrClosed = errors.New("operation not permitted when closed")
 ErrClosed is an error returned when trying to perform an operation after using
 Close().
 
+```go
+var (
+	ErrInvalidUnreadByte = errors.New("invalid UnreadByte, no bytes read")
+)
+```
+
 #### type Buffer
 
 ```go
@@ -157,6 +163,13 @@ ReadAt is an implementation of the io.ReaderAt interface
 func (b *ReadWriteMem) ReadByte() (byte, error)
 ```
 ReadByte is an implementation of the io.ByteReader interface
+
+#### func (*ReadWriteMem) UnreadByte
+
+```go
+func (b *ReadWriteMem) UnreadByte() error
+```
+UnreadByte implements the io.ByteScanner interface
 
 #### func (*ReadWriteMem) WriteTo
 
