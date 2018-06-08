@@ -1,6 +1,9 @@
 package memio
 
-import "io"
+import (
+	"io"
+	"unicode/utf8"
+)
 
 // Buffer grants a byte slice very straightforward IO methods.
 type Buffer []byte
@@ -45,6 +48,16 @@ func (s *Buffer) ReadByte() (byte, error) {
 	b := (*s)[0]
 	*s = (*s)[1:]
 	return b, nil
+}
+
+// ReadRune satisfies the io.RuneReader interface
+func (s *Buffer) ReadRune() (rune, int, error) {
+	if len(*s) == 0 {
+		return 0, 0, io.EOF
+	}
+	r, n := utf8.DecodeRune(*s)
+	*s = (*s)[n:]
+	return r, n, nil
 }
 
 // WriteByte satisfies the io.ByteWriter interface
