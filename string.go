@@ -1,6 +1,9 @@
 package memio
 
-import "io"
+import (
+	"io"
+	"unicode/utf8"
+)
 
 // String grants a string Read-Only methods.
 type String string
@@ -33,6 +36,16 @@ func (s *String) ReadByte() (byte, error) {
 	b := (*s)[0]
 	*s = (*s)[1:]
 	return b, nil
+}
+
+// ReadRune satisfies the io.RuneReader interface
+func (s *String) ReadRune() (rune, int, error) {
+	if len(*s) == 0 {
+		return 0, 0, io.EOF
+	}
+	r, n := utf8.DecodeRuneInString(string(*s))
+	*s = (*s)[n:]
+	return r, n, nil
 }
 
 // Peek reads the next n bytes without advancing the position
