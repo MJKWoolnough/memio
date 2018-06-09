@@ -55,6 +55,13 @@ func (s *Buffer) ReadByte() (byte, error)
 ```
 ReadByte satisfies the io.ByteReader interface
 
+#### func (*Buffer) ReadRune
+
+```go
+func (s *Buffer) ReadRune() (rune, int, error)
+```
+ReadRune satisfies the io.RuneReader interface
+
 #### func (*Buffer) Write
 
 ```go
@@ -213,6 +220,13 @@ Read satisfies the io.Reader interface
 func (s *String) ReadByte() (byte, error)
 ```
 ReadByte satisfies the io.ByteReader interface
+
+#### func (*String) ReadRune
+
+```go
+func (s *String) ReadRune() (rune, int, error)
+```
+ReadRune satisfies the io.RuneReader interface
 
 #### func (*String) WriteTo
 
