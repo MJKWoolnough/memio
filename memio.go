@@ -1,5 +1,5 @@
 // Package memio implements Read, Write, Seek, Close and other io methods for a byte slice.
-package memio
+package memio // import "vimagination.zapto.org/memio"
 
 import (
 	"bytes"
