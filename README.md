@@ -1,6 +1,6 @@
 # memio
 --
-    import "github.com/MJKWoolnough/memio"
+    import "vimagination.zapto.org/memio"
 
 Package memio implements Read, Write, Seek, Close and other io methods for a
 byte slice.
@@ -87,6 +87,85 @@ WriteString writes a string to the buffer without casting to a byte slice
 
 ```go
 func (s *Buffer) WriteTo(w io.Writer) (int64, error)
+```
+WriteTo satisfies the io.WriterTo interface
+
+#### type LimitedBuffer
+
+```go
+type LimitedBuffer []byte
+```
+
+LimitedBuffer grants a byte slice very straightforward IO methods, limiting
+writing to the capacity of the slice
+
+#### func (*LimitedBuffer) Close
+
+```go
+func (s *LimitedBuffer) Close() error
+```
+Close satisfies the io.Closer interface
+
+#### func (*LimitedBuffer) Peek
+
+```go
+func (s *LimitedBuffer) Peek(n int) ([]byte, error)
+```
+Peek reads the next n bytes without advancing the position
+
+#### func (*LimitedBuffer) Read
+
+```go
+func (s *LimitedBuffer) Read(p []byte) (int, error)
+```
+Read satisfies the io.Reader interface
+
+#### func (*LimitedBuffer) ReadByte
+
+```go
+func (s *LimitedBuffer) ReadByte() (byte, error)
+```
+ReadByte satisfies the io.ByteReader interface
+
+#### func (*LimitedBuffer) ReadFrom
+
+```go
+func (s *LimitedBuffer) ReadFrom(r io.Reader) (int64, error)
+```
+ReadFrom satisfies the io.ReaderFrom interface
+
+#### func (*LimitedBuffer) ReadRune
+
+```go
+func (s *LimitedBuffer) ReadRune() (rune, int, error)
+```
+ReadRune satisfies the io.RuneReader interface
+
+#### func (*LimitedBuffer) Write
+
+```go
+func (s *LimitedBuffer) Write(p []byte) (int, error)
+```
+Write satisfies the io.Writer interface
+
+#### func (*LimitedBuffer) WriteByte
+
+```go
+func (s *LimitedBuffer) WriteByte(b byte) error
+```
+WriteByte satisfies the io.ByteWriter interface
+
+#### func (*LimitedBuffer) WriteString
+
+```go
+func (s *LimitedBuffer) WriteString(str string) (int, error)
+```
+WriteString writes a string to the buffer without casting to a byte slice
+
+#### func (*LimitedBuffer) WriteTo
+
+```go
+func (s *LimitedBuffer) WriteTo(w io.Writer) (int64, error)
 ```
 WriteTo satisfies the io.WriterTo interface
 
