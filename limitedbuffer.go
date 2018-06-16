@@ -57,17 +57,18 @@ func (s *LimitedBuffer) WriteString(str string) (int, error) {
 // ReadFrom satisfies the io.ReaderFrom interface
 func (s *LimitedBuffer) ReadFrom(r io.Reader) (int64, error) {
 	var n int64
-	start := int64(len(*s))
-	for {
-		m, err := r.Read((*s)[start+n : cap(*s)])
+	for len(*s) < cap(*s) {
+		m, err := r.Read((*s)[len(*s):cap(*s)])
+		*s = (*s)[:len(*s)+m]
 		n += int64(m)
 		if err != nil {
 			if err == io.EOF {
-				return n, nil
+				break
 			}
 			return n, err
 		}
 	}
+	return n, nil
 }
 
 // ReadByte satisfies the io.ByteReader interface
