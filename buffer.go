@@ -43,6 +43,26 @@ func (s *Buffer) WriteString(str string) (int, error) {
 	return len(str), nil
 }
 
+// ReadFrom satisfies the io.ReaderFrom interface
+func (s *Buffer) ReadFrom(r io.Reader) (int64, error) {
+	var n int64
+	for {
+		if len(*s) == cap(*s) {
+			*s = append(*s, 0)[:len(*s)]
+		}
+		m, err := r.Read((*s)[len(*s):cap(*s)])
+		*s = (*s)[:len(*s)+m]
+		n += int64(m)
+		if err != nil {
+			if err == io.EOF {
+				break
+			}
+			return n, err
+		}
+	}
+	return n, nil
+}
+
 // ReadByte satisfies the io.ByteReader interface
 func (s *Buffer) ReadByte() (byte, error) {
 	if len(*s) == 0 {
