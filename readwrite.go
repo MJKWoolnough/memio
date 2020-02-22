@@ -88,6 +88,7 @@ func (b *ReadWriteMem) WriteTo(f io.Writer) (int64, error) {
 	return int64(n), err
 }
 
+// Errors
 var (
 	ErrInvalidUnreadByte = errors.New("invalid UnreadByte, no bytes read")
 )
