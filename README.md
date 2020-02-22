@@ -18,6 +18,7 @@ var (
 	ErrInvalidUnreadByte = errors.New("invalid UnreadByte, no bytes read")
 )
 ```
+Errors
 
 #### type Buffer
 
@@ -54,6 +55,13 @@ Read satisfies the io.Reader interface
 func (s *Buffer) ReadByte() (byte, error)
 ```
 ReadByte satisfies the io.ByteReader interface
+
+#### func (*Buffer) ReadFrom
+
+```go
+func (s *Buffer) ReadFrom(r io.Reader) (int64, error)
+```
+ReadFrom satisfies the io.ReaderFrom interface
 
 #### func (*Buffer) ReadRune
 
