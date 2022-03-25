@@ -55,12 +55,11 @@ func (s *Buffer) ReadFrom(r io.Reader) (int64, error) {
 		n += int64(m)
 		if err != nil {
 			if err == io.EOF {
-				break
+				return n, nil
 			}
 			return n, err
 		}
 	}
-	return n, nil
 }
 
 // ReadByte satisfies the io.ByteReader interface
