@@ -50,7 +50,7 @@ func (b byteReader) Read(p []byte) (int, error) {
 	if int(b) < len(p) {
 		p = p[:b]
 	}
-	for i := byte(0); i < byte(b); i++ {
+	for i := byte(0); i < byte(len(p)); i++ {
 		p[i] = i
 	}
 	return len(p), nil
