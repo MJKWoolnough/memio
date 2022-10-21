@@ -22,6 +22,18 @@ func (s *LimitedBuffer) Read(p []byte) (int, error) {
 	return n, nil
 }
 
+// ReadAt satisfies the io.ReaderAt interface
+//
+// Care should be taken when used in conjunction with any other Read* calls as
+// they will alter the start point of the buffer
+func (s *LimitedBuffer) ReadAt(p []byte, off int64) (int, error) {
+	n := copy(p, (*s)[off:])
+	if n < len(p) {
+		return n, io.ErrUnexpectedEOF
+	}
+	return n, nil
+}
+
 // WriteTo satisfies the io.WriterTo interface
 func (s *LimitedBuffer) WriteTo(w io.Writer) (int64, error) {
 	if len(*s) == 0 {
@@ -41,6 +53,18 @@ func (s *LimitedBuffer) Write(p []byte) (int, error) {
 	}
 	*s = append(*s, p...)
 	return len(p), err
+}
+
+// WriteAt satisfies the io.WriterAt interface
+func (s *LimitedBuffer) WriteAt(p []byte, off int64) (int, error) {
+	if off+int64(len(p)) >= int64(cap(p)) {
+		return 0, io.ErrShortWrite
+	}
+	n := copy((*s)[off:cap(*s)], p)
+	if n < len(p) {
+		return n, io.ErrShortWrite
+	}
+	return n, nil
 }
 
 // WriteString writes a string to the buffer without casting to a byte slice
