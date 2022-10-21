@@ -21,6 +21,18 @@ func (s *Buffer) Read(p []byte) (int, error) {
 	return n, nil
 }
 
+// ReadAt satisfies the io.ReaderAt interface.
+//
+// Care should be taken when used in conjunction with any other Read* calls as
+// they will alter the start point of the buffer
+func (s *Buffer) ReadAt(p []byte, off int64) (int, error) {
+	n := copy(p, (*s)[off:])
+	if n < len(p) {
+		return n, io.EOF
+	}
+	return n, nil
+}
+
 // WriteTo satisfies the io.WriterTo interface
 func (s *Buffer) WriteTo(w io.Writer) (int64, error) {
 	if len(*s) == 0 {
@@ -35,6 +47,17 @@ func (s *Buffer) WriteTo(w io.Writer) (int64, error) {
 func (s *Buffer) Write(p []byte) (int, error) {
 	*s = append(*s, p...)
 	return len(p), nil
+}
+
+// WriteAt satisfies the io.WriteAt interface.
+func (s *Buffer) WriteAt(p []byte, off int64) (int, error) {
+	l := int64(len(p)) + off
+	if int64(cap(*s)) < l {
+		t := make([]byte, len(*s), l)
+		copy(t, (*s)[:cap(*s)])
+		*s = t
+	}
+	return copy((*s)[off:cap(*s)], p), nil
 }
 
 // WriteString writes a string to the buffer without casting to a byte slice
