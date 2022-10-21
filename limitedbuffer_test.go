@@ -11,6 +11,8 @@ var (
 	_ io.Writer     = &LimitedBuffer{}
 	_ io.WriterTo   = &LimitedBuffer{}
 	_ io.ReaderFrom = &LimitedBuffer{}
+	_ io.ReaderAt   = &LimitedBuffer{}
+	_ io.WriterAt   = &LimitedBuffer{}
 )
 
 func TestLimitedBufferWrite(t *testing.T) {
