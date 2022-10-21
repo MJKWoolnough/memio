@@ -49,6 +49,16 @@ func (s *Buffer) Read(p []byte) (int, error)
 ```
 Read satisfies the io.Reader interface
 
+#### func (*Buffer) ReadAt
+
+```go
+func (s *Buffer) ReadAt(p []byte, off int64) (int, error)
+```
+ReadAt satisfies the io.ReaderAt interface.
+
+Care should be taken when used in conjunction with any other Read* calls as they
+will alter the start point of the buffer
+
 #### func (*Buffer) ReadByte
 
 ```go
@@ -76,6 +86,13 @@ ReadRune satisfies the io.RuneReader interface
 func (s *Buffer) Write(p []byte) (int, error)
 ```
 Write satisfies the io.Writer interface
+
+#### func (*Buffer) WriteAt
+
+```go
+func (s *Buffer) WriteAt(p []byte, off int64) (int, error)
+```
+WriteAt satisfies the io.WriteAt interface.
 
 #### func (*Buffer) WriteByte
 
@@ -128,6 +145,16 @@ func (s *LimitedBuffer) Read(p []byte) (int, error)
 ```
 Read satisfies the io.Reader interface
 
+#### func (*LimitedBuffer) ReadAt
+
+```go
+func (s *LimitedBuffer) ReadAt(p []byte, off int64) (int, error)
+```
+ReadAt satisfies the io.ReaderAt interface
+
+Care should be taken when used in conjunction with any other Read* calls as they
+will alter the start point of the buffer
+
 #### func (*LimitedBuffer) ReadByte
 
 ```go
@@ -155,6 +182,13 @@ ReadRune satisfies the io.RuneReader interface
 func (s *LimitedBuffer) Write(p []byte) (int, error)
 ```
 Write satisfies the io.Writer interface
+
+#### func (*LimitedBuffer) WriteAt
+
+```go
+func (s *LimitedBuffer) WriteAt(p []byte, off int64) (int, error)
+```
+WriteAt satisfies the io.WriterAt interface
 
 #### func (*LimitedBuffer) WriteByte
 
