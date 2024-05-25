@@ -49,7 +49,7 @@ func (s *LimitedBuffer) Write(p []byte) (int, error) {
 	var err error
 	if left := cap(*s) - len(*s); len(p) > left {
 		p = p[:left]
-		err = io.ErrShortBuffer
+		err = io.ErrShortWrite
 	}
 	*s = append(*s, p...)
 	return len(p), err

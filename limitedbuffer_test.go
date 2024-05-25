@@ -38,8 +38,8 @@ func TestLimitedBufferWrite(t *testing.T) {
 		t.Errorf("expecting %q, got %q", "John  ", string(data))
 		return
 	}
-	if n, err := writer.Write([]byte("ny")); err != io.ErrShortBuffer {
-		t.Errorf("expecting io.ErrShortBuffer, got: %s", err)
+	if n, err := writer.Write([]byte("ny")); err != io.ErrShortWrite {
+		t.Errorf("expecting io.ErrShortWrite, got: %s", err)
 		return
 	} else if n != 0 {
 		t.Errorf("expecting to write 0 bytes, wrote %d", n)
