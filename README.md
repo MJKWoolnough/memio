@@ -18,7 +18,7 @@ var (
 	ErrInvalidUnreadByte = errors.New("invalid UnreadByte, no bytes read")
 )
 ```
-Errors
+Errors.
 
 #### type Buffer
 
@@ -33,21 +33,21 @@ Buffer grants a byte slice very straightforward IO methods.
 ```go
 func (s *Buffer) Close() error
 ```
-Close satisfies the io.Closer interface
+Close satisfies the io.Closer interface.
 
 #### func (*Buffer) Peek
 
 ```go
 func (s *Buffer) Peek(n int) ([]byte, error)
 ```
-Peek reads the next n bytes without advancing the position
+Peek reads the next n bytes without advancing the position.
 
 #### func (*Buffer) Read
 
 ```go
 func (s *Buffer) Read(p []byte) (int, error)
 ```
-Read satisfies the io.Reader interface
+Read satisfies the io.Reader interface.
 
 #### func (*Buffer) ReadAt
 
@@ -57,35 +57,35 @@ func (s *Buffer) ReadAt(p []byte, off int64) (int, error)
 ReadAt satisfies the io.ReaderAt interface.
 
 Care should be taken when used in conjunction with any other Read* calls as they
-will alter the start point of the buffer
+will alter the start point of the buffer.
 
 #### func (*Buffer) ReadByte
 
 ```go
 func (s *Buffer) ReadByte() (byte, error)
 ```
-ReadByte satisfies the io.ByteReader interface
+ReadByte satisfies the io.ByteReader interface.
 
 #### func (*Buffer) ReadFrom
 
 ```go
 func (s *Buffer) ReadFrom(r io.Reader) (int64, error)
 ```
-ReadFrom satisfies the io.ReaderFrom interface
+ReadFrom satisfies the io.ReaderFrom interface.
 
 #### func (*Buffer) ReadRune
 
 ```go
 func (s *Buffer) ReadRune() (rune, int, error)
 ```
-ReadRune satisfies the io.RuneReader interface
+ReadRune satisfies the io.RuneReader interface.
 
 #### func (*Buffer) Write
 
 ```go
 func (s *Buffer) Write(p []byte) (int, error)
 ```
-Write satisfies the io.Writer interface
+Write satisfies the io.Writer interface.
 
 #### func (*Buffer) WriteAt
 
@@ -99,21 +99,21 @@ WriteAt satisfies the io.WriteAt interface.
 ```go
 func (s *Buffer) WriteByte(b byte) error
 ```
-WriteByte satisfies the io.ByteWriter interface
+WriteByte satisfies the io.ByteWriter interface.
 
 #### func (*Buffer) WriteString
 
 ```go
 func (s *Buffer) WriteString(str string) (int, error)
 ```
-WriteString writes a string to the buffer without casting to a byte slice
+WriteString writes a string to the buffer without casting to a byte slice.
 
 #### func (*Buffer) WriteTo
 
 ```go
 func (s *Buffer) WriteTo(w io.Writer) (int64, error)
 ```
-WriteTo satisfies the io.WriterTo interface
+WriteTo satisfies the io.WriterTo interface.
 
 #### type LimitedBuffer
 
@@ -122,94 +122,94 @@ type LimitedBuffer []byte
 ```
 
 LimitedBuffer grants a byte slice very straightforward IO methods, limiting
-writing to the capacity of the slice
+writing to the capacity of the slice.
 
 #### func (*LimitedBuffer) Close
 
 ```go
 func (s *LimitedBuffer) Close() error
 ```
-Close satisfies the io.Closer interface
+Close satisfies the io.Closer interface.
 
 #### func (*LimitedBuffer) Peek
 
 ```go
 func (s *LimitedBuffer) Peek(n int) ([]byte, error)
 ```
-Peek reads the next n bytes without advancing the position
+Peek reads the next n bytes without advancing the position.
 
 #### func (*LimitedBuffer) Read
 
 ```go
 func (s *LimitedBuffer) Read(p []byte) (int, error)
 ```
-Read satisfies the io.Reader interface
+Read satisfies the io.Reader interface.
 
 #### func (*LimitedBuffer) ReadAt
 
 ```go
 func (s *LimitedBuffer) ReadAt(p []byte, off int64) (int, error)
 ```
-ReadAt satisfies the io.ReaderAt interface
+ReadAt satisfies the io.ReaderAt interface.
 
 Care should be taken when used in conjunction with any other Read* calls as they
-will alter the start point of the buffer
+will alter the start point of the buffer.
 
 #### func (*LimitedBuffer) ReadByte
 
 ```go
 func (s *LimitedBuffer) ReadByte() (byte, error)
 ```
-ReadByte satisfies the io.ByteReader interface
+ReadByte satisfies the io.ByteReader interface.
 
 #### func (*LimitedBuffer) ReadFrom
 
 ```go
 func (s *LimitedBuffer) ReadFrom(r io.Reader) (int64, error)
 ```
-ReadFrom satisfies the io.ReaderFrom interface
+ReadFrom satisfies the io.ReaderFrom interface.
 
 #### func (*LimitedBuffer) ReadRune
 
 ```go
 func (s *LimitedBuffer) ReadRune() (rune, int, error)
 ```
-ReadRune satisfies the io.RuneReader interface
+ReadRune satisfies the io.RuneReader interface.
 
 #### func (*LimitedBuffer) Write
 
 ```go
 func (s *LimitedBuffer) Write(p []byte) (int, error)
 ```
-Write satisfies the io.Writer interface
+Write satisfies the io.Writer interface.
 
 #### func (*LimitedBuffer) WriteAt
 
 ```go
 func (s *LimitedBuffer) WriteAt(p []byte, off int64) (int, error)
 ```
-WriteAt satisfies the io.WriterAt interface
+WriteAt satisfies the io.WriterAt interface.
 
 #### func (*LimitedBuffer) WriteByte
 
 ```go
 func (s *LimitedBuffer) WriteByte(b byte) error
 ```
-WriteByte satisfies the io.ByteWriter interface
+WriteByte satisfies the io.ByteWriter interface.
 
 #### func (*LimitedBuffer) WriteString
 
 ```go
 func (s *LimitedBuffer) WriteString(str string) (int, error)
 ```
-WriteString writes a string to the buffer without casting to a byte slice
+WriteString writes a string to the buffer without casting to a byte slice.
 
 #### func (*LimitedBuffer) WriteTo
 
 ```go
 func (s *LimitedBuffer) WriteTo(w io.Writer) (int64, error)
 ```
-WriteTo satisfies the io.WriterTo interface
+WriteTo satisfies the io.WriterTo interface.
 
 #### type ReadMem
 
@@ -219,14 +219,14 @@ type ReadMem struct {
 }
 ```
 
-ReadMem holds a byte slice that can be used for many io interfaces
+ReadMem holds a byte slice that can be used for many io interfaces.
 
 #### func  Open
 
 ```go
 func Open(data []byte) ReadMem
 ```
-Open uses a byte slice for reading. Implements io.Reader, io.Seeker, io.Closer,
+Open uses a byte slice for reading. Implements io.Reader, io.Seeker,. io.Closer,
 io.ReaderAt, io.ByteReader and io.WriterTo.
 
 #### func (ReadMem) Close
@@ -235,14 +235,14 @@ io.ReaderAt, io.ByteReader and io.WriterTo.
 func (ReadMem) Close() error
 ```
 Close is a no-op func the lets ReadMem implement interfaces that require a Close
-method
+method.
 
 #### func (ReadMem) Peek
 
 ```go
 func (r ReadMem) Peek(n int) ([]byte, error)
 ```
-Peek reads the next n bytes without advancing the position
+Peek reads the next n bytes without advancing the position.
 
 #### type ReadWriteMem
 
@@ -269,42 +269,42 @@ io.ByteWriter and io.ReaderFrom.
 ```go
 func (b *ReadWriteMem) Peek(n int) ([]byte, error)
 ```
-Peek reads the next n bytes without advancing the position
+Peek reads the next n bytes without advancing the position.
 
 #### func (*ReadWriteMem) Read
 
 ```go
 func (b *ReadWriteMem) Read(p []byte) (int, error)
 ```
-Read is an implementation of the io.Reader interface
+Read is an implementation of the io.Reader interface.
 
 #### func (*ReadWriteMem) ReadAt
 
 ```go
 func (b *ReadWriteMem) ReadAt(p []byte, off int64) (int, error)
 ```
-ReadAt is an implementation of the io.ReaderAt interface
+ReadAt is an implementation of the io.ReaderAt interface.
 
 #### func (*ReadWriteMem) ReadByte
 
 ```go
 func (b *ReadWriteMem) ReadByte() (byte, error)
 ```
-ReadByte is an implementation of the io.ByteReader interface
+ReadByte is an implementation of the io.ByteReader interface.
 
 #### func (*ReadWriteMem) UnreadByte
 
 ```go
 func (b *ReadWriteMem) UnreadByte() error
 ```
-UnreadByte implements the io.ByteScanner interface
+UnreadByte implements the io.ByteScanner interface.
 
 #### func (*ReadWriteMem) WriteTo
 
 ```go
 func (b *ReadWriteMem) WriteTo(f io.Writer) (int64, error)
 ```
-WriteTo is an implementation of the io.WriterTo interface
+WriteTo is an implementation of the io.WriterTo interface.
 
 #### type String
 
@@ -319,42 +319,42 @@ String grants a string Read-Only methods.
 ```go
 func (s *String) Close() error
 ```
-Close satisfies the io.Closer interface
+Close satisfies the io.Closer interface.
 
 #### func (*String) Peek
 
 ```go
 func (s *String) Peek(n int) ([]byte, error)
 ```
-Peek reads the next n bytes without advancing the position
+Peek reads the next n bytes without advancing the position.
 
 #### func (*String) Read
 
 ```go
 func (s *String) Read(p []byte) (int, error)
 ```
-Read satisfies the io.Reader interface
+Read satisfies the io.Reader interface.
 
 #### func (*String) ReadByte
 
 ```go
 func (s *String) ReadByte() (byte, error)
 ```
-ReadByte satisfies the io.ByteReader interface
+ReadByte satisfies the io.ByteReader interface.
 
 #### func (*String) ReadRune
 
 ```go
 func (s *String) ReadRune() (rune, int, error)
 ```
-ReadRune satisfies the io.RuneReader interface
+ReadRune satisfies the io.RuneReader interface.
 
 #### func (*String) WriteTo
 
 ```go
 func (s *String) WriteTo(w io.Writer) (int64, error)
 ```
-WriteTo satisfies the io.WriterTo interface
+WriteTo satisfies the io.WriterTo interface.
 
 #### type WriteMem
 
@@ -379,53 +379,53 @@ io.Closer, io.WriterAt, io.ByteWriter and io.ReaderFrom.
 ```go
 func (b *WriteMem) Close() error
 ```
-Close is an implementation of the io.Closer interface
+Close is an implementation of the io.Closer interface.
 
 #### func (*WriteMem) ReadFrom
 
 ```go
 func (b *WriteMem) ReadFrom(f io.Reader) (int64, error)
 ```
-ReadFrom is an implementation of the io.ReaderFrom interface
+ReadFrom is an implementation of the io.ReaderFrom interface.
 
 #### func (*WriteMem) Seek
 
 ```go
 func (b *WriteMem) Seek(offset int64, whence int) (int64, error)
 ```
-Seek is an implementation of the io.Seeker interface
+Seek is an implementation of the io.Seeker interface.
 
 #### func (*WriteMem) Truncate
 
 ```go
 func (b *WriteMem) Truncate(s int64) error
 ```
-Truncate changes the length of the byte slice to the given amount
+Truncate changes the length of the byte slice to the given amount.
 
 #### func (*WriteMem) Write
 
 ```go
 func (b *WriteMem) Write(p []byte) (int, error)
 ```
-Write is an implementation of the io.Writer interface
+Write is an implementation of the io.Writer interface.
 
 #### func (*WriteMem) WriteAt
 
 ```go
 func (b *WriteMem) WriteAt(p []byte, off int64) (int, error)
 ```
-WriteAt is an implementation of the io.WriterAt interface
+WriteAt is an implementation of the io.WriterAt interface.
 
 #### func (*WriteMem) WriteByte
 
 ```go
 func (b *WriteMem) WriteByte(c byte) error
 ```
-WriteByte is an implementation of the io.WriteByte interface
+WriteByte is an implementation of the io.WriteByte interface.
 
 #### func (*WriteMem) WriteString
 
 ```go
 func (b *WriteMem) WriteString(s string) (int, error)
 ```
-WriteString writes a string to the underlying memory
+WriteString writes a string to the underlying memory.
