@@ -18,29 +18,21 @@ var (
 func TestLimitedBufferWrite(t *testing.T) {
 	data := []byte("Beep")
 	writer := LimitedBuffer(data)[:0:4]
+
 	if n, err := writer.Write([]byte("J")); n != 1 {
 		t.Errorf("expecting to write 1 byte, wrote %d", n)
-		return
 	} else if err != nil {
 		t.Errorf("got error: %q", err.Error())
-		return
 	} else if string(data) != "Jeep" {
 		t.Errorf("expecting %q, got %q", "Jeep  ", string(data))
-		return
-	}
-	if n, err := writer.Write([]byte("ohn")); n != 3 {
+	} else if n, err = writer.Write([]byte("ohn")); n != 3 {
 		t.Errorf("expecting to write 3 bytes, wrote %d", n)
-		return
 	} else if err != nil {
 		t.Errorf("got error: %q", err.Error())
-		return
 	} else if string(data) != "John" {
 		t.Errorf("expecting %q, got %q", "John  ", string(data))
-		return
-	}
-	if n, err := writer.Write([]byte("ny")); err != io.ErrShortWrite {
+	} else if n, err = writer.Write([]byte("ny")); err != io.ErrShortWrite {
 		t.Errorf("expecting io.ErrShortWrite, got: %s", err)
-		return
 	} else if n != 0 {
 		t.Errorf("expecting to write 0 bytes, wrote %d", n)
 	}
@@ -55,11 +47,13 @@ func (b byteReader) Read(p []byte) (int, error) {
 	for i := byte(0); i < byte(len(p)); i++ {
 		p[i] = i
 	}
+
 	return len(p), nil
 }
 
 func TestLimitedBufferReadFrom(t *testing.T) {
 	l := make(LimitedBuffer, 0, 30)
+
 	n, err := l.ReadFrom(byteReader(1))
 	if n != 30 {
 		t.Errorf("expecting to read 30 bytes, read %d", n)
@@ -70,8 +64,8 @@ func TestLimitedBufferReadFrom(t *testing.T) {
 	}
 
 	l = l[:0]
-	n, err = l.ReadFrom(byteReader(2))
-	if n != 30 {
+
+	if n, err = l.ReadFrom(byteReader(2)); n != 30 {
 		t.Errorf("expecting to read 30 bytes, read %d", n)
 	} else if err != nil {
 		t.Errorf("go unexpected error: %s", err)
@@ -80,8 +74,8 @@ func TestLimitedBufferReadFrom(t *testing.T) {
 	}
 
 	l = l[:0]
-	n, err = l.ReadFrom(byteReader(3))
-	if n != 30 {
+
+	if n, err = l.ReadFrom(byteReader(3)); n != 30 {
 		t.Errorf("expecting to read 30 bytes, read %d", n)
 	} else if err != nil {
 		t.Errorf("go unexpected error: %s", err)
@@ -90,8 +84,8 @@ func TestLimitedBufferReadFrom(t *testing.T) {
 	}
 
 	l = l[:0]
-	n, err = l.ReadFrom(io.LimitReader(byteReader(4), 20))
-	if n != 20 {
+
+	if n, err = l.ReadFrom(io.LimitReader(byteReader(4), 20)); n != 20 {
 		t.Errorf("expecting to read 20 bytes, read %d", n)
 	} else if err != nil {
 		t.Errorf("go unexpected error: %s", err)
