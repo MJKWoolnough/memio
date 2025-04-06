@@ -1,7 +1,6 @@
 package memio
 
 import (
-	"bytes"
 	"io"
 	"testing"
 )
@@ -65,37 +64,5 @@ func TestBufferWrite(t *testing.T) {
 		t.Errorf("got error: %q", err.Error())
 	} else if string(data) != "Johnny" {
 		t.Errorf("expecting %q, got %q", "Johnny", string(data))
-	}
-}
-
-func TestBufferReadFrom(t *testing.T) {
-	for n, test := range [...]struct {
-		byteReader
-		limit   int64
-		initial Buffer
-		result  []byte
-	}{
-		/*
-			{
-				3,
-				23,
-				make(Buffer, 10, 10),
-				[]byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1},
-			},
-			{
-				3,
-				31,
-				make(Buffer, 0, 0),
-				[]byte{0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1},
-			},
-		*/
-	} {
-		if m, err := test.initial.ReadFrom(io.LimitReader(&test.byteReader, test.limit)); err != nil {
-			t.Errorf("test %d: unexpected error: %s", n+1, err)
-		} else if m != test.limit {
-			t.Errorf("test %d: expecting to read %d bytes, read %d", n+1, test.limit, m)
-		} else if !bytes.Equal(test.result, test.initial) {
-			t.Errorf("test %d: expecting %v, got %v", n+1, test.result, test.initial)
-		}
 	}
 }
