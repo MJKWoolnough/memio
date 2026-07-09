@@ -2,7 +2,6 @@
 
 [![CI](https://github.com/MJKWoolnough/memio/actions/workflows/go-checks.yml/badge.svg)](https://github.com/MJKWoolnough/memio/actions)
 [![Go Reference](https://pkg.go.dev/badge/vimagination.zapto.org/memio.svg)](https://pkg.go.dev/vimagination.zapto.org/memio)
-[![Go Report Card](https://goreportcard.com/badge/vimagination.zapto.org/memio)](https://goreportcard.com/report/vimagination.zapto.org/memio)
 
 --
     import "vimagination.zapto.org/memio"
